@@ -12,12 +12,12 @@ namespace WirelessAdbPackageManager
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(UI.form);
+            Application.Run(UI.Form);
         }
 
         public static async Task HandleConnection()
         {
-            await CheckIfAlreadyPaired(UI.form.textBox1.Text);
+            await CheckIfAlreadyPaired(UI.Form.IpAddressTextBox.Text);
 
             if (Connectivity.IsPaired && Connectivity.IsConnected)
             {
@@ -31,7 +31,7 @@ namespace WirelessAdbPackageManager
 
             if (Connectivity.IsPaired)
             {
-                bool isConnected = await ConnectToDevice(UI.form.textBox1.Text, UI.form.textBox2.Text);
+                bool isConnected = await ConnectToDevice(UI.Form.IpAddressTextBox.Text, UI.Form.PortTextBox.Text);
                 if (isConnected)
                 {
                     UpdateUIForConnectedState();
@@ -40,8 +40,8 @@ namespace WirelessAdbPackageManager
             }
             else
             {
-                UI.form.ConnectButton.Enabled = false;
-                bool isPaired = await PairWithDevice(UI.form.textBox1.Text, UI.form.textBox2.Text, UI.form.textBox3.Text);
+                UI.Form.ConnectButton.Enabled = false;
+                bool isPaired = await PairWithDevice(UI.Form.IpAddressTextBox.Text, UI.Form.PortTextBox.Text, UI.Form.PairingCodeTextBox.Text);
                 if (isPaired)
                 {
                     Connectivity.IsPaired = true;
@@ -51,7 +51,7 @@ namespace WirelessAdbPackageManager
                 {
                     ShowError("Unable to pair with your device, please try again.");
                 }
-                UI.form.ConnectButton.Enabled = true;
+                UI.Form.ConnectButton.Enabled = true;
             }
         }
 
@@ -59,7 +59,7 @@ namespace WirelessAdbPackageManager
         {
             string result = await RunCommandAsync($@"{Path.GetTempPath()}adb.exe devices -l");
             var split = result.Split("\r\n").ToList();
-            var deviceLine = split.FirstOrDefault(item => item.Contains(UI.form.textBox1.Text));
+            var deviceLine = split.FirstOrDefault(item => item.Contains(UI.Form.IpAddressTextBox.Text));
             if (deviceLine != null)
             {
                 split = deviceLine.Split(" ").ToList();
@@ -84,7 +84,7 @@ namespace WirelessAdbPackageManager
                 if (device.Contains(ip) && !device.Contains("offline"))
                 {
                     var port = device.Split(":")[1].Replace("device", "").Trim();
-                    UI.form.textBox2.Text = port;
+                    UI.Form.PortTextBox.Text = port;
                     Connectivity.IsPaired = true;
                     Connectivity.IsConnected = true;
                     UpdateLog($"Previously paired with device, updated port to {port}");
@@ -119,7 +119,7 @@ namespace WirelessAdbPackageManager
             await RunCommandAsync($@"{Path.GetTempPath()}adb.exe kill-server");
             UpdateLog("Disconnected from device");
             ClearPackageLists();
-            UI.form.ConnectButton.Text = "CONNECT";
+            UI.Form.ConnectButton.Text = "CONNECT";
             UpdateUIForDisconnectedState();
         }
 
@@ -180,7 +180,7 @@ namespace WirelessAdbPackageManager
             if (disabledPackagesResult.Contains("package:com."))
             {
                 disabledPackages = ExtractPackages(disabledPackagesResult);
-                UI.form.checkedListBox2.Items.AddRange(disabledPackages.ToArray());
+                UI.Form.DisabledPackagesCheckBoxList.Items.AddRange(disabledPackages.ToArray());
             }
 
             string enabledPackagesResult = await RunCommandAsync($@"{Path.GetTempPath()}adb.exe shell pm list packages");
@@ -188,14 +188,14 @@ namespace WirelessAdbPackageManager
             {
                 UpdateLog("Updating current package lists");
                 enabledPackages = ExtractPackages(enabledPackagesResult).Except(disabledPackages).ToList();
-                UI.form.checkedListBox1.Items.AddRange(enabledPackages.ToArray());
+                UI.Form.EnabledPackagesCheckBoxList.Items.AddRange(enabledPackages.ToArray());
             }
             else
             {
                 UpdateLog("No packages could be found, try reconnecting.");
             }
 
-            FilterEnabledPackages(UI.form.textBox5.Text);
+            FilterEnabledPackages(UI.Form.EnabledPackagesSearchTextBox.Text);
         }
 
         private static List<string> ExtractPackages(string result)
@@ -205,41 +205,41 @@ namespace WirelessAdbPackageManager
 
         private static void UpdateUIForConnectedState()
         {
-            UI.form.InstallButton.Enabled = true;
-            UI.form.textBox1.Enabled = false;
-            UI.form.textBox2.Enabled = false;
-            UI.form.textBox3.Enabled = false;
-            UI.form.ConnectButton.Text = "DISCONNECT";
+            UI.Form.InstallButton.Enabled = true;
+            UI.Form.IpAddressTextBox.Enabled = false;
+            UI.Form.PortTextBox.Enabled = false;
+            UI.Form.PairingCodeTextBox.Enabled = false;
+            UI.Form.ConnectButton.Text = "DISCONNECT";
         }
 
         private static void UpdateUIForDisconnectedState()
         {
-            UI.form.InstallButton.Enabled = false;
-            UI.form.textBox1.Enabled = true;
-            UI.form.textBox2.Enabled = true;
-            UI.form.textBox3.Enabled = true;
-            UI.form.ConnectButton.Text = "CONNECT";
+            UI.Form.InstallButton.Enabled = false;
+            UI.Form.IpAddressTextBox.Enabled = true;
+            UI.Form.PortTextBox.Enabled = true;
+            UI.Form.PairingCodeTextBox.Enabled = true;
+            UI.Form.ConnectButton.Text = "CONNECT";
         }
 
         public static async Task<bool> ValidateForm()
         {
             bool result;
 
-            result = await IsValidIPAddress(UI.form.textBox1.Text);
+            result = await IsValidIPAddress(UI.Form.IpAddressTextBox.Text);
             if (!result)
             {
                 ShowError("Invalid IP Address");
                 return false;
             }
 
-            result = await IsNumericAndLength(UI.form.textBox2.Text, 5);
+            result = await IsNumericAndLength(UI.Form.PortTextBox.Text, 5);
             if (!result)
             {
                 ShowError("Invalid Port");
                 return false;
             }
 
-            result = await IsNumericAndLength(UI.form.textBox3.Text, 6);
+            result = await IsNumericAndLength(UI.Form.PairingCodeTextBox.Text, 6);
             if (!result)
             {
                 ShowError("Invalid Pairing Code");
@@ -262,22 +262,22 @@ namespace WirelessAdbPackageManager
         private static void UpdateLog(string message)
         {
             string timestamp = DateTime.Now.ToString("hh:mm:ss tt");
-            UI.form.textBox4.Text = string.IsNullOrEmpty(UI.form.textBox4.Text)
+            UI.Form.LogsTextBox.Text = string.IsNullOrEmpty(UI.Form.LogsTextBox.Text)
                 ? $"{timestamp} - {message}"
-                : $"{timestamp} - {message}\r\n{UI.form.textBox4.Text}";
+                : $"{timestamp} - {message}\r\n{UI.Form.LogsTextBox.Text}";
         }
 
         private static void ClearPackageLists()
         {
-            UI.form.checkedListBox1.Items.Clear();
-            UI.form.checkedListBox2.Items.Clear();
+            UI.Form.EnabledPackagesCheckBoxList.Items.Clear();
+            UI.Form.DisabledPackagesCheckBoxList.Items.Clear();
             disabledPackages.Clear();
             enabledPackages.Clear();
         }
 
         private static void ToggleUIElements(bool enable)
         {
-            UI.form.textBox1.Enabled = UI.form.textBox2.Enabled = UI.form.textBox3.Enabled = UI.form.textBox4.Enabled = UI.form.textBox5.Enabled = UI.form.textBox6.Enabled = UI.form.ConnectButton.Enabled = UI.form.InstallButton.Enabled = enable;
+            UI.Form.IpAddressTextBox.Enabled = UI.Form.PortTextBox.Enabled = UI.Form.PairingCodeTextBox.Enabled = UI.Form.LogsTextBox.Enabled = UI.Form.EnabledPackagesSearchTextBox.Enabled = UI.Form.DisabledPackagesSearchTextBox.Enabled = UI.Form.ConnectButton.Enabled = UI.Form.InstallButton.Enabled = enable;
         }
 
         private static string GetPackageName(object item)
@@ -287,12 +287,12 @@ namespace WirelessAdbPackageManager
 
         public static void FilterEnabledPackages(string searchTerm)
         {
-            FilterPackages(enabledPackages, UI.form.checkedListBox1, searchTerm);
+            FilterPackages(enabledPackages, UI.Form.EnabledPackagesCheckBoxList, searchTerm);
         }
 
         public static void FilterDisabledPackages(string searchTerm)
         {
-            FilterPackages(disabledPackages, UI.form.checkedListBox2, searchTerm);
+            FilterPackages(disabledPackages, UI.Form.DisabledPackagesCheckBoxList, searchTerm);
         }
 
         private static void FilterPackages(List<string> packageList, CheckedListBox checkedListBox, string searchTerm)
@@ -403,6 +403,6 @@ namespace WirelessAdbPackageManager
 
     public static class UI
     {
-        public static Form1 form { get; set; } = new();
+        public static Form1 Form { get; set; } = new();
     }
 }

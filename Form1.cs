@@ -40,37 +40,37 @@ namespace WirelessAdbPackageManager
 
         private async void UninstallButton_Click(object sender, EventArgs e)
         {
-            await Program.PerformPackageOperation(checkedListBox1.CheckedItems, "uninstall -k --user 0", "Success", "Uninstalled", "Unable to uninstall");
+            await Program.PerformPackageOperation(EnabledPackagesCheckBoxList.CheckedItems, "uninstall -k --user 0", "Success", "Uninstalled", "Unable to uninstall");
         }
 
         private async void DisableButton_Click(object sender, EventArgs e)
         {
-            await Program.PerformPackageOperation(checkedListBox1.CheckedItems, "disable-user --user 0", "new state:", "Disabled", "Unable to disable");
+            await Program.PerformPackageOperation(EnabledPackagesCheckBoxList.CheckedItems, "disable-user --user 0", "new state:", "Disabled", "Unable to disable");
         }
 
         private async void EnableButton_Click(object sender, EventArgs e)
         {
-            await Program.PerformPackageOperation(checkedListBox2.CheckedItems, "enable", "new state:", "Enabled", "Unable to enable");
+            await Program.PerformPackageOperation(DisabledPackagesCheckBoxList.CheckedItems, "enable", "new state:", "Enabled", "Unable to enable");
         }
 
         private void EnabledPackagesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UninstallButton.Enabled = DisableButton.Enabled = (checkedListBox1.CheckedItems.Count > 0);
+            UninstallButton.Enabled = DisableButton.Enabled = (EnabledPackagesCheckBoxList.CheckedItems.Count > 0);
         }
 
         private void DisabledPackagesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EnableButton.Enabled = (checkedListBox2.CheckedItems.Count > 0);
+            EnableButton.Enabled = (DisabledPackagesCheckBoxList.CheckedItems.Count > 0);
         }
 
         private void EnabledPackageFilter_TextChanged(object sender, EventArgs e)
         {
-            Program.FilterEnabledPackages(textBox5.Text);
+            Program.FilterEnabledPackages(EnabledPackagesSearchTextBox.Text);
         }
 
         private void DisabledPackageFilter_TextChanged(object sender, EventArgs e)
         {
-            Program.FilterDisabledPackages(textBox6.Text);
+            Program.FilterDisabledPackages(DisabledPackagesSearchTextBox.Text);
         }        
     }
 }

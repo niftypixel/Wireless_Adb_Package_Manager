@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            checkedListBox1 = new CheckedListBox();
+            IpAddressTextBox = new TextBox();
+            PortTextBox = new TextBox();
+            PairingCodeTextBox = new TextBox();
+            EnabledPackagesCheckBoxList = new CheckedListBox();
             ConnectButton = new Button();
-            textBox4 = new TextBox();
+            LogsTextBox = new TextBox();
             UninstallButton = new Button();
             DisableButton = new Button();
             label1 = new Label();
@@ -43,56 +43,56 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
-            checkedListBox2 = new CheckedListBox();
+            DisabledPackagesCheckBoxList = new CheckedListBox();
             EnableButton = new Button();
-            textBox5 = new TextBox();
+            EnabledPackagesSearchTextBox = new TextBox();
             label7 = new Label();
             label8 = new Label();
-            textBox6 = new TextBox();
+            DisabledPackagesSearchTextBox = new TextBox();
             InstallButton = new Button();
             SuspendLayout();
             // 
-            // textBox1
+            // IpAddressTextBox
             // 
-            textBox1.BackColor = Color.FromArgb(250, 250, 250);
-            textBox1.Location = new Point(12, 27);
-            textBox1.MaxLength = 15;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(103, 23);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "192.168.0.5";
+            IpAddressTextBox.BackColor = Color.FromArgb(250, 250, 250);
+            IpAddressTextBox.Location = new Point(12, 27);
+            IpAddressTextBox.MaxLength = 15;
+            IpAddressTextBox.Name = "IpAddressTextBox";
+            IpAddressTextBox.Size = new Size(103, 23);
+            IpAddressTextBox.TabIndex = 0;
+            IpAddressTextBox.Text = "192.168.0.5";
             // 
-            // textBox2
+            // PortTextBox
             // 
-            textBox2.BackColor = Color.FromArgb(250, 250, 250);
-            textBox2.Location = new Point(121, 27);
-            textBox2.MaxLength = 5;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(50, 23);
-            textBox2.TabIndex = 1;
-            textBox2.Text = "45033";
+            PortTextBox.BackColor = Color.FromArgb(250, 250, 250);
+            PortTextBox.Location = new Point(121, 27);
+            PortTextBox.MaxLength = 5;
+            PortTextBox.Name = "PortTextBox";
+            PortTextBox.Size = new Size(50, 23);
+            PortTextBox.TabIndex = 1;
+            PortTextBox.Text = "45033";
             // 
-            // textBox3
+            // PairingCodeTextBox
             // 
-            textBox3.BackColor = Color.FromArgb(250, 250, 250);
-            textBox3.Location = new Point(177, 27);
-            textBox3.MaxLength = 6;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(75, 23);
-            textBox3.TabIndex = 2;
-            textBox3.Text = "879502";
+            PairingCodeTextBox.BackColor = Color.FromArgb(250, 250, 250);
+            PairingCodeTextBox.Location = new Point(177, 27);
+            PairingCodeTextBox.MaxLength = 6;
+            PairingCodeTextBox.Name = "PairingCodeTextBox";
+            PairingCodeTextBox.Size = new Size(75, 23);
+            PairingCodeTextBox.TabIndex = 2;
+            PairingCodeTextBox.Text = "879502";
             // 
-            // checkedListBox1
+            // EnabledPackagesCheckBoxList
             // 
-            checkedListBox1.CheckOnClick = true;
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(12, 79);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.ScrollAlwaysVisible = true;
-            checkedListBox1.Size = new Size(351, 310);
-            checkedListBox1.Sorted = true;
-            checkedListBox1.TabIndex = 3;
-            checkedListBox1.SelectedIndexChanged += EnabledPackagesList_SelectedIndexChanged;
+            EnabledPackagesCheckBoxList.CheckOnClick = true;
+            EnabledPackagesCheckBoxList.FormattingEnabled = true;
+            EnabledPackagesCheckBoxList.Location = new Point(12, 79);
+            EnabledPackagesCheckBoxList.Name = "EnabledPackagesCheckBoxList";
+            EnabledPackagesCheckBoxList.ScrollAlwaysVisible = true;
+            EnabledPackagesCheckBoxList.Size = new Size(351, 310);
+            EnabledPackagesCheckBoxList.Sorted = true;
+            EnabledPackagesCheckBoxList.TabIndex = 3;
+            EnabledPackagesCheckBoxList.SelectedIndexChanged += EnabledPackagesList_SelectedIndexChanged;
             // 
             // ConnectButton
             // 
@@ -107,16 +107,16 @@
             ConnectButton.UseVisualStyleBackColor = false;
             ConnectButton.Click += ConnectButton_Click;
             // 
-            // textBox4
+            // LogsTextBox
             // 
-            textBox4.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox4.Location = new Point(12, 442);
-            textBox4.Multiline = true;
-            textBox4.Name = "textBox4";
-            textBox4.ReadOnly = true;
-            textBox4.ScrollBars = ScrollBars.Vertical;
-            textBox4.Size = new Size(708, 152);
-            textBox4.TabIndex = 5;
+            LogsTextBox.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LogsTextBox.Location = new Point(12, 442);
+            LogsTextBox.Multiline = true;
+            LogsTextBox.Name = "LogsTextBox";
+            LogsTextBox.ReadOnly = true;
+            LogsTextBox.ScrollBars = ScrollBars.Vertical;
+            LogsTextBox.Size = new Size(708, 152);
+            LogsTextBox.TabIndex = 5;
             // 
             // UninstallButton
             // 
@@ -202,17 +202,17 @@
             label6.TabIndex = 14;
             label6.Text = "Disabled Packages";
             // 
-            // checkedListBox2
+            // DisabledPackagesCheckBoxList
             // 
-            checkedListBox2.CheckOnClick = true;
-            checkedListBox2.FormattingEnabled = true;
-            checkedListBox2.Location = new Point(369, 79);
-            checkedListBox2.Name = "checkedListBox2";
-            checkedListBox2.ScrollAlwaysVisible = true;
-            checkedListBox2.Size = new Size(351, 310);
-            checkedListBox2.Sorted = true;
-            checkedListBox2.TabIndex = 13;
-            checkedListBox2.SelectedIndexChanged += DisabledPackagesList_SelectedIndexChanged;
+            DisabledPackagesCheckBoxList.CheckOnClick = true;
+            DisabledPackagesCheckBoxList.FormattingEnabled = true;
+            DisabledPackagesCheckBoxList.Location = new Point(369, 79);
+            DisabledPackagesCheckBoxList.Name = "DisabledPackagesCheckBoxList";
+            DisabledPackagesCheckBoxList.ScrollAlwaysVisible = true;
+            DisabledPackagesCheckBoxList.Size = new Size(351, 310);
+            DisabledPackagesCheckBoxList.Sorted = true;
+            DisabledPackagesCheckBoxList.TabIndex = 13;
+            DisabledPackagesCheckBoxList.SelectedIndexChanged += DisabledPackagesList_SelectedIndexChanged;
             // 
             // EnableButton
             // 
@@ -229,15 +229,15 @@
             EnableButton.UseVisualStyleBackColor = false;
             EnableButton.Click += EnableButton_Click;
             // 
-            // textBox5
+            // EnabledPackagesSearchTextBox
             // 
-            textBox5.BackColor = Color.FromArgb(250, 250, 250);
-            textBox5.Location = new Point(60, 395);
-            textBox5.MaxLength = 100;
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(103, 23);
-            textBox5.TabIndex = 16;
-            textBox5.TextChanged += EnabledPackageFilter_TextChanged;
+            EnabledPackagesSearchTextBox.BackColor = Color.FromArgb(250, 250, 250);
+            EnabledPackagesSearchTextBox.Location = new Point(60, 395);
+            EnabledPackagesSearchTextBox.MaxLength = 100;
+            EnabledPackagesSearchTextBox.Name = "EnabledPackagesSearchTextBox";
+            EnabledPackagesSearchTextBox.Size = new Size(103, 23);
+            EnabledPackagesSearchTextBox.TabIndex = 16;
+            EnabledPackagesSearchTextBox.TextChanged += EnabledPackageFilter_TextChanged;
             // 
             // label7
             // 
@@ -257,15 +257,15 @@
             label8.TabIndex = 18;
             label8.Text = "Search";
             // 
-            // textBox6
+            // DisabledPackagesSearchTextBox
             // 
-            textBox6.BackColor = Color.FromArgb(250, 250, 250);
-            textBox6.Location = new Point(417, 395);
-            textBox6.MaxLength = 100;
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(103, 23);
-            textBox6.TabIndex = 19;
-            textBox6.TextChanged += DisabledPackageFilter_TextChanged;
+            DisabledPackagesSearchTextBox.BackColor = Color.FromArgb(250, 250, 250);
+            DisabledPackagesSearchTextBox.Location = new Point(417, 395);
+            DisabledPackagesSearchTextBox.MaxLength = 100;
+            DisabledPackagesSearchTextBox.Name = "DisabledPackagesSearchTextBox";
+            DisabledPackagesSearchTextBox.Size = new Size(103, 23);
+            DisabledPackagesSearchTextBox.TabIndex = 19;
+            DisabledPackagesSearchTextBox.TextChanged += DisabledPackageFilter_TextChanged;
             // 
             // InstallButton
             // 
@@ -289,13 +289,13 @@
             BackColor = Color.FromArgb(34, 34, 34);
             ClientSize = new Size(731, 612);
             Controls.Add(InstallButton);
-            Controls.Add(textBox6);
+            Controls.Add(DisabledPackagesSearchTextBox);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(textBox5);
+            Controls.Add(EnabledPackagesSearchTextBox);
             Controls.Add(EnableButton);
             Controls.Add(label6);
-            Controls.Add(checkedListBox2);
+            Controls.Add(DisabledPackagesCheckBoxList);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -303,12 +303,12 @@
             Controls.Add(label1);
             Controls.Add(DisableButton);
             Controls.Add(UninstallButton);
-            Controls.Add(textBox4);
+            Controls.Add(LogsTextBox);
             Controls.Add(ConnectButton);
-            Controls.Add(checkedListBox1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(EnabledPackagesCheckBoxList);
+            Controls.Add(PairingCodeTextBox);
+            Controls.Add(PortTextBox);
+            Controls.Add(IpAddressTextBox);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -323,12 +323,12 @@
 
         #endregion
 
-        public TextBox textBox1;
-        public TextBox textBox2;
-        public TextBox textBox3;
-        public CheckedListBox checkedListBox1;
+        public TextBox IpAddressTextBox;
+        public TextBox PortTextBox;
+        public TextBox PairingCodeTextBox;
+        public CheckedListBox EnabledPackagesCheckBoxList;
         public Button ConnectButton;
-        public TextBox textBox4;
+        public TextBox LogsTextBox;
         public Button UninstallButton;
         public Button DisableButton;
         public Label label1;
@@ -337,12 +337,12 @@
         public Label label4;
         public Label label5;
         public Label label6;
-        public CheckedListBox checkedListBox2;
+        public CheckedListBox DisabledPackagesCheckBoxList;
         public Button EnableButton;
-        public TextBox textBox5;
+        public TextBox EnabledPackagesSearchTextBox;
         public Label label7;
         public Label label8;
-        public TextBox textBox6;
+        public TextBox DisabledPackagesSearchTextBox;
         public Button InstallButton;
     }
 }
